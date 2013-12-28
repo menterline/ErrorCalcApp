@@ -64,6 +64,7 @@ public class View {
 				}
 				numbox.setText("");
 				errbox.setText("");
+                Control.errStatus = false;
 			}
 		});
 
