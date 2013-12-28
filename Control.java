@@ -33,7 +33,7 @@ public class Control {
 	public static double[] Multiply(double[] inp) {
 		double num1 = inp[0]; double err1 = inp[1]; double num2 = inp[2]; double err2 = inp[3];
 		double ans = num1*num2;
-		double err = ans*Math.pow(Math.pow(err1/num1, 2) + Math.pow(err2/num2, 2), 1/2);
+        double err = ans*(err1/num1 + err2/num2);
 		double[] AnsArr = {ans, err};
 		return AnsArr;
 	}
@@ -41,8 +41,8 @@ public class Control {
 	public static double[] Divide(double[] inp) {
 		double num1 = inp[0]; double err1 = inp[1]; double num2 = inp[2]; double err2 = inp[3];
 		double ans = num1/num2;
-		double err = ans*Math.pow(Math.pow(err1/num1, 2) + Math.pow(err2/num2, 2), 1/2);
-		double[] AnsArr = {ans, err};
+	    double err = ans*(err1/num1+err2/num2);
+        double[] AnsArr = {ans, err};
 		return AnsArr;
 	}
 	
