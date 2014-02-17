@@ -37,18 +37,18 @@ public class View {
 		//box to enter value
 		final MyTextField numbox = new MyTextField();
 		addComponent (frame, numbox, 0, 1, 3, 1, GridBagConstraints.CENTER, GridBagConstraints.BOTH);
-		numbox.setFont(new Font("Dialog", 1, 30)); 
+		numbox.setFont(new Font("Dialog", 1, 30));
 
 		//Label for Number box
 		JLabel numbox_label = new JLabel("Number");
 		addComponent(frame, numbox_label, 0, 0, 1,1,GridBagConstraints.CENTER, GridBagConstraints.BOTH);
 		numbox_label.setHorizontalAlignment(MyTextField.RIGHT);
 		numbox_label.setFont(new Font("Dialog", 1, 16));
-		
+
 		//error box
 		final MyTextField errbox = new MyTextField();
 		addComponent(frame, errbox, 1,1,3,1, GridBagConstraints.CENTER, GridBagConstraints.BOTH);
-		errbox.setFont(new Font("Dialog", 1, 30)); 
+		errbox.setFont(new Font("Dialog", 1, 30));
 
 		//Label for error box
 		JLabel errbox_label = new JLabel("Uncertainty");
@@ -81,9 +81,9 @@ public class View {
 			}
 		});
 
-		
-		
-		
+
+
+
 		//Backspace
 		final JButton BackspaceButton = new JButton("Back");
         BackspaceButton.setPreferredSize(dim);
@@ -244,7 +244,7 @@ public class View {
 				}
                 Num1_Button.setFocusPainted(false);
 			}
-		}); 
+		});
 
 
 		final JButton Num2_Button = new JButton("2");
@@ -261,7 +261,7 @@ public class View {
 				}
                 Num2_Button.setFocusPainted(false);
 			}
-		}); 
+		});
 
 
 		final JButton Num3_Button = new JButton("3");
@@ -278,7 +278,7 @@ public class View {
 				}
                 Num3_Button.setFocusPainted(false);
 			}
-		}); 
+		});
 
 
 
@@ -297,7 +297,7 @@ public class View {
                 Num4_Button.setFocusPainted(false);
 
 			}
-		}); 
+		});
 
 
 
@@ -316,7 +316,7 @@ public class View {
                 Num5_Button.setFocusPainted(false);
 
 			}
-		}); 
+		});
 
 
 
@@ -335,7 +335,7 @@ public class View {
                 Num6_Button.setFocusPainted(false);
 
 			}
-		}); 
+		});
 
 
 
@@ -354,7 +354,7 @@ public class View {
                 Num7_Button.setFocusPainted(false);
 
 			}
-		}); 
+		});
 
 
 
@@ -373,7 +373,7 @@ public class View {
                 Num8_Button.setFocusPainted(false);
 
 			}
-		}); 
+		});
 
 
 
@@ -392,7 +392,7 @@ public class View {
                 Num9_Button.setFocusPainted(false);
 
 			}
-		}); 
+		});
 
 
 
@@ -411,7 +411,7 @@ public class View {
                 Num0_Button.setFocusPainted(false);
 
 			}
-		}); 
+		});
 
 
 		final JButton Dec_Button = new JButton(".");
@@ -428,7 +428,7 @@ public class View {
 				}
                 Dec_Button.setFocusPainted(false);
 			}
-		}); 
+		});
 
 		final JButton NegButton = new JButton("\u00B1");
 		NegButton.setFont(new Font("Dialog", 1, 30));
@@ -438,7 +438,12 @@ public class View {
 				boolean errStatus = Control.errStatus;
 				if (errStatus == false) {
 					String curr = numbox.getText();
-					numbox.setText("-" + curr);
+				    	if (curr.charAt(0) != '-') {
+						numbox.setText('-' + curr);
+					}
+					if (curr.charAt(0) == '-') {
+						numbox.setText(curr.substring(1, curr.length()));
+					}
 				}
 				if (errStatus == true) {
 					String curr = errbox.getText();
@@ -446,7 +451,7 @@ public class View {
 				}
                 NegButton.setFocusPainted(false);
 			}
-		}); 
+		});
 
 
 		frame.setSize(450,600);
@@ -457,13 +462,8 @@ public class View {
 	//General Method for adding components to GridBagLayout
 	private static void addComponent(Container container, Component component, int gridy, int gridx,
 			int gridwidth, int gridheight, int anchor, int fill) {
-		GridBagConstraints gbc = new GridBagConstraints(gridx, gridy, gridwidth, gridheight, 1.0, 1.0, 
+		GridBagConstraints gbc = new GridBagConstraints(gridx, gridy, gridwidth, gridheight, 1.0, 1.0,
 				anchor, fill, insets, 0,0);
 		container.add(component, gbc);
 	}
 }
-
-
-
-
-
