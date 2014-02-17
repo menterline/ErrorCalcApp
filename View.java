@@ -447,7 +447,13 @@ public class View {
 				}
 				if (errStatus == true) {
 					String curr = errbox.getText();
-					errbox.setText("-" + curr);
+				    	if (curr.charAt(0) != '-') {
+						errbox.setText('-' + curr);
+					}
+					if (curr.charAt(0) == '-') {
+						errbox.setText(curr.substring(1, curr.length()));
+					}
+
 				}
                 NegButton.setFocusPainted(false);
 			}
