@@ -460,7 +460,7 @@ public class View {
 		});
 
 
-		frame.setSize(450,600);
+		frame.setSize(550,650);
 		frame.setVisible(true);
 
 
