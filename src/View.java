@@ -1,3 +1,4 @@
+
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
@@ -23,10 +24,13 @@ public class View {
 
 
 	private static final Insets insets = new Insets(0,0,0,0);
-
+	private static JFrame frame;
+	private static MyTextField numbox;
+	private static MyTextField errbox;
+	
 	public static void main(String[] args) {
 
-		final JFrame frame = new JFrame("Error Propagation Calculator");
+		frame = new JFrame("Error Propagation Calculator");
 
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setLayout(new GridBagLayout());
@@ -35,7 +39,7 @@ public class View {
 
 		//make text fields
 		//box to enter value
-		final MyTextField numbox = new MyTextField();
+		numbox = new MyTextField();
 		addComponent (frame, numbox, 0, 1, 3, 1, GridBagConstraints.CENTER, GridBagConstraints.BOTH);
 		numbox.setFont(new Font("Dialog", 1, 30));
 
@@ -43,10 +47,10 @@ public class View {
 		JLabel numbox_label = new JLabel("Number");
 		addComponent(frame, numbox_label, 0, 0, 1,1,GridBagConstraints.CENTER, GridBagConstraints.BOTH);
 		numbox_label.setHorizontalAlignment(MyTextField.RIGHT);
-		numbox_label.setFont(new Font("Dialog", 1, 16));
+		numbox_label.setFont(new Font("Dialog", 1, 32));
 
 		//error box
-		final MyTextField errbox = new MyTextField();
+		errbox = new MyTextField();
 		addComponent(frame, errbox, 1,1,3,1, GridBagConstraints.CENTER, GridBagConstraints.BOTH);
 		errbox.setFont(new Font("Dialog", 1, 30));
 
@@ -54,14 +58,14 @@ public class View {
 		JLabel errbox_label = new JLabel("Uncertainty");
 		addComponent(frame, errbox_label, 1, 0, 1,1,GridBagConstraints.CENTER, GridBagConstraints.BOTH);
 		errbox_label.setHorizontalAlignment(MyTextField.RIGHT);
-		errbox_label.setFont(new Font("Dialog", 1, 16));
+		errbox_label.setFont(new Font("Dialog", 1, 32));
 
 		//Add borders
 		Border border = BorderFactory.createLineBorder(Color.black);
 		numbox.setBorder(border);
 		errbox.setBorder(border);
 
-        Dimension dim = new Dimension(100, 49);
+        Dimension dim = new Dimension(100, 50);
 
 
         //Clear button (Clears memory)
@@ -225,210 +229,41 @@ public class View {
 		});
 
 
-
-
-
-
 		//Set up number pad
 		final JButton Num1_Button = new JButton("1");
-		Num1_Button.setFont(new Font("Dialog", 1, 30));
-		addComponent(frame, Num1_Button, 5,0,1,1, GridBagConstraints.CENTER, GridBagConstraints.BOTH);
-		Num1_Button.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
-				boolean errStatus = Control.errStatus;
-				if (errStatus == false) {
-					numbox.append("1");
-				}
-				if (errStatus == true) {
-					errbox.append("1");
-				}
-                Num1_Button.setFocusPainted(false);
-			}
-		});
-
-
+		addInputButton(Num1_Button, 5, 0, 1, 1);
+	
 		final JButton Num2_Button = new JButton("2");
-		Num2_Button.setFont(new Font("Dialog", 1, 30));
-		addComponent(frame, Num2_Button, 5,1,1,1, GridBagConstraints.CENTER, GridBagConstraints.BOTH);
-		Num2_Button.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
-				boolean errStatus = Control.errStatus;
-				if (errStatus == false) {
-					numbox.append("2");
-				}
-				if (errStatus == true) {
-					errbox.append("2");
-				}
-                Num2_Button.setFocusPainted(false);
-			}
-		});
-
+		addInputButton(Num2_Button, 5, 1, 1, 1);
 
 		final JButton Num3_Button = new JButton("3");
-		Num3_Button.setFont(new Font("Dialog", 1, 30));
-		addComponent(frame, Num3_Button, 5,2,1,1, GridBagConstraints.CENTER, GridBagConstraints.BOTH);
-		Num3_Button.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
-				boolean errStatus = Control.errStatus;
-				if (errStatus == false) {
-					numbox.append("3");
-				}
-				if (errStatus == true) {
-					errbox.append("3");
-				}
-                Num3_Button.setFocusPainted(false);
-			}
-		});
-
-
+		addInputButton(Num3_Button, 5, 2, 1, 1);
 
 		final JButton Num4_Button = new JButton("4");
-		Num4_Button.setFont(new Font("Dialog", 1, 30));
-		addComponent(frame, Num4_Button, 4,0,1,1, GridBagConstraints.CENTER, GridBagConstraints.BOTH);
-		Num4_Button.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
-				boolean errStatus = Control.errStatus;
-				if (errStatus == false) {
-					numbox.append("4");
-				}
-				if (errStatus == true) {
-					errbox.append("4");
-				}
-                Num4_Button.setFocusPainted(false);
-
-			}
-		});
-
-
+		addInputButton(Num4_Button, 4, 0, 1, 1);
 
 		final JButton Num5_Button = new JButton("5");
-		Num5_Button.setFont(new Font("Dialog", 1, 30));
-		addComponent(frame, Num5_Button, 4,1,1,1, GridBagConstraints.CENTER, GridBagConstraints.BOTH);
-		Num5_Button.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
-				boolean errStatus = Control.errStatus;
-				if (errStatus == false) {
-					numbox.append("5");
-				}
-				if (errStatus == true) {
-					errbox.append("5");
-				}
-                Num5_Button.setFocusPainted(false);
-
-			}
-		});
-
-
+		addInputButton(Num5_Button, 4, 1, 1, 1);
 
 		final JButton Num6_Button = new JButton("6");
-		Num6_Button.setFont(new Font("Dialog", 1, 30));
-		addComponent(frame, Num6_Button, 4,2,1,1, GridBagConstraints.CENTER, GridBagConstraints.BOTH);
-		Num6_Button.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
-				boolean errStatus = Control.errStatus;
-				if (errStatus == false) {
-					numbox.append("6");
-				}
-				if (errStatus == true) {
-					errbox.append("6");
-				}
-                Num6_Button.setFocusPainted(false);
-
-			}
-		});
-
-
+		addInputButton(Num6_Button, 4, 2, 1, 1);
 
 		final JButton Num7_Button = new JButton("7");
-		Num7_Button.setFont(new Font("Dialog", 1, 30));
-		addComponent(frame, Num7_Button, 3,0,1,1, GridBagConstraints.CENTER, GridBagConstraints.BOTH);
-		Num7_Button.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
-				boolean errStatus = Control.errStatus;
-				if (errStatus == false) {
-					numbox.append("7");
-				}
-				if (errStatus == true) {
-					errbox.append("7");
-				}
-                Num7_Button.setFocusPainted(false);
-
-			}
-		});
-
-
-
+		addInputButton(Num7_Button, 3, 0, 1, 1);
+		
 		final JButton Num8_Button = new JButton("8");
-		Num8_Button.setFont(new Font("Dialog", 1, 30));
-		addComponent(frame, Num8_Button, 3,1,1,1, GridBagConstraints.CENTER, GridBagConstraints.BOTH);
-		Num8_Button.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
-				boolean errStatus = Control.errStatus;
-				if (errStatus == false) {
-					numbox.append("8");
-				}
-				if (errStatus == true) {
-					errbox.append("8");
-				}
-                Num8_Button.setFocusPainted(false);
-
-			}
-		});
-
-
+		addInputButton(Num8_Button, 3, 1, 1, 1);
 
 		final JButton Num9_Button = new JButton("9");
-		Num9_Button.setFont(new Font("Dialog", 1, 30));
-		addComponent(frame, Num9_Button, 3,2,1,1, GridBagConstraints.CENTER, GridBagConstraints.BOTH);
-		Num9_Button.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
-				boolean errStatus = Control.errStatus;
-				if (errStatus == false) {
-					numbox.append("9");
-				}
-				if (errStatus == true) {
-					errbox.append("9");
-				}
-                Num9_Button.setFocusPainted(false);
-
-			}
-		});
-
-
+		addInputButton(Num9_Button, 3, 2, 1, 1);
 
 		final JButton Num0_Button = new JButton("0");
-		Num0_Button.setFont(new Font("Dialog", 1, 30));
-		addComponent(frame, Num0_Button, 6,1,1,1, GridBagConstraints.CENTER, GridBagConstraints.BOTH);
-		Num0_Button.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
-				boolean errStatus = Control.errStatus;
-				if (errStatus == false) {
-					numbox.append("0");
-				}
-				if (errStatus == true) {
-					errbox.append("0");
-				}
-                Num0_Button.setFocusPainted(false);
+		addInputButton(Num0_Button, 6, 1, 1, 1);
 
-			}
-		});
-
-
+		
 		final JButton Dec_Button = new JButton(".");
-		Dec_Button.setFont(new Font("Dialog", 1, 30));
-		addComponent(frame, Dec_Button, 6,0,1,1,GridBagConstraints.CENTER, GridBagConstraints.BOTH);
-		Dec_Button.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
-				boolean errStatus = Control.errStatus;
-				if (errStatus == false) {
-					numbox.append(".");
-				}
-				if (errStatus == true) {
-					errbox.append(".");
-				}
-                Dec_Button.setFocusPainted(false);
-			}
-		});
+		addInputButton(Dec_Button, 6, 0, 1, 1);
+		
 
 		final JButton NegButton = new JButton("\u00B1");
 		NegButton.setFont(new Font("Dialog", 1, 30));
@@ -471,5 +306,23 @@ public class View {
 		GridBagConstraints gbc = new GridBagConstraints(gridx, gridy, gridwidth, gridheight, 1.0, 1.0,
 				anchor, fill, insets, 0,0);
 		container.add(component, gbc);
+	}
+	
+	private static void addInputButton(JButton currentButton, int gridx, int gridy, int gridwidth, int gridheight) {
+		Font btnFont = new Font("Dialog", 1, 30);
+		currentButton.setFont(btnFont);
+		addComponent(frame, currentButton, gridx, gridy, gridwidth, gridheight, GridBagConstraints.CENTER, GridBagConstraints.BOTH);
+		currentButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				boolean errStatus = Control.errStatus;
+				if (errStatus == false) {
+					numbox.append(currentButton.getText());
+				}
+				if (errStatus == true) {
+					errbox.append(currentButton.getText());
+				}
+				currentButton.setFocusPainted(false);
+			}
+		});
 	}
 }

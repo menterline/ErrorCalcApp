@@ -1,3 +1,4 @@
+
 import javax.swing.JTextField;
 
 public class MyTextField extends JTextField {
