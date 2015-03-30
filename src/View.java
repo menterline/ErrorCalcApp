@@ -27,7 +27,14 @@ public class View {
 	private static JFrame frame;
 	private static MyTextField numbox;
 	private static MyTextField errbox;
-	
+	private static JButton toErr;
+	private static JButton clearButton;
+	private static JButton backspaceButton;
+	private static JButton Add_Button;
+	private static JButton Sub_Button;
+	private static JButton Times_Button;
+	private static JButton Div_Button;
+
 	public static void main(String[] args) {
 
 		frame = new JFrame("Error Propagation Calculator");
@@ -46,8 +53,8 @@ public class View {
 		//Label for Number box
 		JLabel numbox_label = new JLabel("Number");
 		addComponent(frame, numbox_label, 0, 0, 1,1,GridBagConstraints.CENTER, GridBagConstraints.BOTH);
-		numbox_label.setHorizontalAlignment(MyTextField.RIGHT);
-		numbox_label.setFont(new Font("Dialog", 1, 32));
+		numbox_label.setHorizontalAlignment(MyTextField.CENTER);
+		numbox_label.setFont(new Font("Dialog", 1, 24));
 
 		//error box
 		errbox = new MyTextField();
@@ -57,23 +64,23 @@ public class View {
 		//Label for error box
 		JLabel errbox_label = new JLabel("Uncertainty");
 		addComponent(frame, errbox_label, 1, 0, 1,1,GridBagConstraints.CENTER, GridBagConstraints.BOTH);
-		errbox_label.setHorizontalAlignment(MyTextField.RIGHT);
-		errbox_label.setFont(new Font("Dialog", 1, 32));
+		errbox_label.setHorizontalAlignment(MyTextField.CENTER);
+		errbox_label.setFont(new Font("Dialog", 1, 24));
 
 		//Add borders
 		Border border = BorderFactory.createLineBorder(Color.black);
 		numbox.setBorder(border);
 		errbox.setBorder(border);
 
-        Dimension dim = new Dimension(100, 50);
+		Dimension dim = new Dimension(100, 50);
 
 
-        //Clear button (Clears memory)
-		final JButton ClearButton = new JButton("C");
-        ClearButton.setPreferredSize(dim);
-        ClearButton.setFont(new Font("Dialog", 1, 30));
-		addComponent(frame, ClearButton, 2,0,1,1,GridBagConstraints.CENTER, GridBagConstraints.BOTH);
-		ClearButton.addActionListener(new ActionListener() {
+		//Clear button (Clears memory)
+		clearButton = new JButton("C");
+		clearButton.setPreferredSize(dim);
+		clearButton.setFont(new Font("Dialog", 1, 30));
+		addComponent(frame, clearButton, 2,0,1,1,GridBagConstraints.CENTER, GridBagConstraints.BOTH);
+		clearButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				for (int i = 0; i == Control.inputArr.length; i ++) {
 					Control.inputArr[i] = 0;
@@ -81,7 +88,7 @@ public class View {
 				numbox.setText("");
 				errbox.setText("");
 				Control.errStatus = false;
-				ClearButton.setFocusPainted(false);
+				clearButton.setFocusPainted(false);
 			}
 		});
 
@@ -89,12 +96,12 @@ public class View {
 
 
 		//Backspace
-		final JButton BackspaceButton = new JButton("Back");
-        BackspaceButton.setPreferredSize(dim);
-        BackspaceButton.setFont(new Font("Dialog", 1, 30));
-		addComponent(frame, BackspaceButton, 2,1,1,1,GridBagConstraints.CENTER, GridBagConstraints.BOTH);
-		BackspaceButton.setMargin(insets);
-		BackspaceButton.addActionListener(new ActionListener() {
+		backspaceButton = new JButton("Back");
+		backspaceButton.setPreferredSize(dim);
+		backspaceButton.setFont(new Font("Dialog", 1, 30));
+		addComponent(frame, backspaceButton, 2,1,1,1,GridBagConstraints.CENTER, GridBagConstraints.BOTH);
+		backspaceButton.setMargin(insets);
+		backspaceButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				boolean errStatus = Control.errStatus;
 				if (numbox.getText().length() != 0) {
@@ -110,13 +117,13 @@ public class View {
 				else {
 					numbox.setText("");
 				}
-                BackspaceButton.setFocusPainted(false);
+				backspaceButton.setFocusPainted(false);
 			}
 		});
 
 
-		//Button to change to error entry
-		final JButton toErr = new JButton("Error");
+		//Button to change to error entry	
+		toErr = new JButton("Error");
 		toErr.setFont(new Font("Dialog", 1, 30));
 		toErr.setPreferredSize(dim);
 		addComponent(frame, toErr, 2, 2,1,1, GridBagConstraints.CENTER, GridBagConstraints.BOTH);
@@ -129,143 +136,71 @@ public class View {
 				else {
 					toErr.setBorder(UIManager.getBorder("Button.border"));
 				}
-                toErr.setFocusPainted(false);
+				toErr.setFocusPainted(false);
 			}
 		});
 
 		//Addition Button
-		final JButton Add_Button = new JButton("+");
-        Add_Button.setPreferredSize(dim);
-		Add_Button.setFont(new Font("Dialog", 1, 30));
-		addComponent(frame, Add_Button, 2,3,1,1, GridBagConstraints.CENTER, GridBagConstraints.BOTH);
-		Add_Button.setMargin(insets);
-		Add_Button.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
-				Control.inputArr[0] = Double.parseDouble(numbox.getText());
-				Control.inputArr[1] = Double.parseDouble(errbox.getText());
-				numbox.setText("");
-				errbox.setText("");
-				Control.doAdd = true;
-				numbox.requestFocusInWindow();
-				Control.errStatus = false;
-				toErr.setBorder(UIManager.getBorder("Button.border"));
-                Add_Button.setFocusPainted(false);
-			}
-		});
+		Add_Button = new JButton("+");
+		addOperationButton(Add_Button, "ADD", 2, 3, 1, 1);
 
 
 		//Subtraction Button
-		final JButton Sub_Button = new JButton("-");
-		Sub_Button.setFont(new Font("Dialog", 1, 30));
-		addComponent(frame, Sub_Button, 3,3,1,1, GridBagConstraints.CENTER, GridBagConstraints.BOTH);
-		Sub_Button.setMargin(insets);
-		Sub_Button.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
-				Control.inputArr[0] = Double.parseDouble(numbox.getText());
-				Control.inputArr[1] = Double.parseDouble(errbox.getText());
-				numbox.setText("");
-				errbox.setText("");
-				Control.doMinus = true;
-				numbox.requestFocusInWindow();
-				Control.errStatus = false;
-                toErr.setBorder(UIManager.getBorder("Button.border"));
-                Sub_Button.setFocusPainted(false);
-			}
-		});
+		Sub_Button = new JButton("-");
+		addOperationButton(Sub_Button, "MINUS", 3, 3, 1, 1);
+
 
 		//Multiplication Button
-		final JButton Mult_Button = new JButton("X");
-		Mult_Button.setFont(new Font("Dialog", 1, 30));
-		addComponent(frame, Mult_Button, 4,3,1,1, GridBagConstraints.CENTER, GridBagConstraints.BOTH);
-		Mult_Button.setMargin(insets);
-		Mult_Button.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
-				Control.inputArr[0] = Double.parseDouble(numbox.getText());
-				Control.inputArr[1] = Double.parseDouble(errbox.getText());
-				numbox.setText("");
-				errbox.setText("");
-				Control.doTimes = true;
-				numbox.requestFocusInWindow();
-				Control.errStatus = false;
-                toErr.setBorder(UIManager.getBorder("Button.border"));
-                Mult_Button.setFocusPainted(false);
-			}
-		});
+		Times_Button = new JButton("X");
+		addOperationButton(Times_Button, "TIMES", 4, 3, 1, 1);
+
 		//Division Button
-		final JButton Div_Button = new JButton("\u00F7");
-		Div_Button.setFont(new Font("Dialog", 1, 30));
-		addComponent(frame, Div_Button, 5,3,1,1, GridBagConstraints.CENTER, GridBagConstraints.BOTH);
-		Div_Button.setMargin(insets);
-		Div_Button.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
-				Control.inputArr[0] = Double.parseDouble(numbox.getText());
-				Control.inputArr[1] = Double.parseDouble(errbox.getText());
-				numbox.setText("");
-				errbox.setText("");
-				Control.doDiv = true;
-				numbox.requestFocusInWindow();
-				Control.errStatus = false;
-                toErr.setBorder(UIManager.getBorder("Button.border"));
-                Div_Button.setFocusPainted(false);
-			}
-		});
+		Div_Button = new JButton("\u00F7");
+		addOperationButton(Div_Button, "DIVIDE", 5, 3, 1, 1);
+
+
 		//Equals button
 		final JButton Equals_Button = new JButton("=");
-		Equals_Button.setFont(new Font("Dialog", 1, 30));
-		addComponent(frame, Equals_Button, 6,3,1,1, GridBagConstraints.CENTER, GridBagConstraints.BOTH);
-		Equals_Button.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
-				Control.inputArr[2] = Double.parseDouble(numbox.getText());
-				Control.inputArr[3] = Double.parseDouble(errbox.getText());
-				numbox.setText((Double.toString(Control.doOperation(Control.inputArr)[0])));
-				errbox.setText((Double.toString(Control.doOperation(Control.inputArr)[1])));
-				Control.doAdd = false;
-				Control.doMinus = false;
-				Control.doTimes = false;
-				Control.doDiv = false;
-                toErr.setBorder(UIManager.getBorder("Button.border"));
-                Equals_Button.setFocusPainted(false);
-			}
-		});
+		addOperationButton(Equals_Button, "EQUALS", 6, 3, 1, 1);
 
 
 		//Set up number pad
-		final JButton Num1_Button = new JButton("1");
+		JButton Num1_Button = new JButton("1");
 		addInputButton(Num1_Button, 5, 0, 1, 1);
-	
-		final JButton Num2_Button = new JButton("2");
+
+		JButton Num2_Button = new JButton("2");
 		addInputButton(Num2_Button, 5, 1, 1, 1);
 
-		final JButton Num3_Button = new JButton("3");
+		JButton Num3_Button = new JButton("3");
 		addInputButton(Num3_Button, 5, 2, 1, 1);
 
-		final JButton Num4_Button = new JButton("4");
+		JButton Num4_Button = new JButton("4");
 		addInputButton(Num4_Button, 4, 0, 1, 1);
 
-		final JButton Num5_Button = new JButton("5");
+		JButton Num5_Button = new JButton("5");
 		addInputButton(Num5_Button, 4, 1, 1, 1);
 
-		final JButton Num6_Button = new JButton("6");
+		JButton Num6_Button = new JButton("6");
 		addInputButton(Num6_Button, 4, 2, 1, 1);
 
-		final JButton Num7_Button = new JButton("7");
+		JButton Num7_Button = new JButton("7");
 		addInputButton(Num7_Button, 3, 0, 1, 1);
-		
-		final JButton Num8_Button = new JButton("8");
+
+		JButton Num8_Button = new JButton("8");
 		addInputButton(Num8_Button, 3, 1, 1, 1);
 
-		final JButton Num9_Button = new JButton("9");
+		JButton Num9_Button = new JButton("9");
 		addInputButton(Num9_Button, 3, 2, 1, 1);
 
-		final JButton Num0_Button = new JButton("0");
+		JButton Num0_Button = new JButton("0");
 		addInputButton(Num0_Button, 6, 1, 1, 1);
 
-		
-		final JButton Dec_Button = new JButton(".");
-		addInputButton(Dec_Button, 6, 0, 1, 1);
-		
 
-		final JButton NegButton = new JButton("\u00B1");
+		JButton Dec_Button = new JButton(".");
+		addInputButton(Dec_Button, 6, 0, 1, 1);
+
+
+		JButton NegButton = new JButton("\u00B1");
 		NegButton.setFont(new Font("Dialog", 1, 30));
 		addComponent(frame, NegButton, 6,2,1,1,GridBagConstraints.CENTER, GridBagConstraints.BOTH);
 		NegButton.addActionListener(new ActionListener() {
@@ -273,7 +208,7 @@ public class View {
 				boolean errStatus = Control.errStatus;
 				if (errStatus == false) {
 					String curr = numbox.getText();
-				    	if (curr.charAt(0) != '-') {
+					if (curr.charAt(0) != '-') {
 						numbox.setText('-' + curr);
 					}
 					if (curr.charAt(0) == '-') {
@@ -282,7 +217,7 @@ public class View {
 				}
 				if (errStatus == true) {
 					String curr = errbox.getText();
-				    	if (curr.charAt(0) != '-') {
+					if (curr.charAt(0) != '-') {
 						errbox.setText('-' + curr);
 					}
 					if (curr.charAt(0) == '-') {
@@ -290,7 +225,7 @@ public class View {
 					}
 
 				}
-                NegButton.setFocusPainted(false);
+				NegButton.setFocusPainted(false);
 			}
 		});
 
@@ -303,11 +238,10 @@ public class View {
 	//General Method for adding components to GridBagLayout
 	private static void addComponent(Container container, Component component, int gridy, int gridx,
 			int gridwidth, int gridheight, int anchor, int fill) {
-		GridBagConstraints gbc = new GridBagConstraints(gridx, gridy, gridwidth, gridheight, 1.0, 1.0,
-				anchor, fill, insets, 0,0);
+		GridBagConstraints gbc = new GridBagConstraints(gridx, gridy, gridwidth, gridheight, 1.0, 1.0,anchor, fill, insets, 0,0);
 		container.add(component, gbc);
 	}
-	
+
 	private static void addInputButton(JButton currentButton, int gridx, int gridy, int gridwidth, int gridheight) {
 		Font btnFont = new Font("Dialog", 1, 30);
 		currentButton.setFont(btnFont);
@@ -321,6 +255,109 @@ public class View {
 				if (errStatus == true) {
 					errbox.append(currentButton.getText());
 				}
+				currentButton.setFocusPainted(false);
+			}
+		});
+	}
+
+	private static void addOperationButton(JButton currentButton, String op, int gridx, int gridy, int gridwidth, int gridheight) {
+		currentButton.setFont(new Font("Dialog", 1, 30));
+		addComponent(frame, currentButton, gridx, gridy, gridwidth, gridheight, GridBagConstraints.CENTER, GridBagConstraints.BOTH);
+		switch (op) {
+		case "EQUALS": 
+			addEqualsButton(currentButton);
+			break;
+		case "ADD":
+			addPlusButton(currentButton);
+			break;
+		case "MINUS":
+			addMinusButton(currentButton);
+			break;
+		case "TIMES":
+			addTimesButton(currentButton);
+			break;
+		case "DIVIDE":
+			addDivideButton(currentButton);
+			break;
+		}
+	}
+
+	private static void addPlusButton(JButton currentButton) {
+		currentButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				Control.inputArr[0] = Double.parseDouble(numbox.getText());
+				Control.inputArr[1] = Double.parseDouble(errbox.getText());
+				numbox.setText("");
+				errbox.setText("");
+				Control.doAdd = true;
+				numbox.requestFocusInWindow();
+				Control.errStatus = false;
+				toErr.setBorder(UIManager.getBorder("Button.border"));
+				currentButton.setFocusPainted(false);
+			}
+		});
+	}
+
+	private static void addMinusButton(JButton currentButton) {
+		Sub_Button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				Control.inputArr[0] = Double.parseDouble(numbox.getText());
+				Control.inputArr[1] = Double.parseDouble(errbox.getText());
+				numbox.setText("");
+				errbox.setText("");
+				Control.doMinus = true;
+				numbox.requestFocusInWindow();
+				Control.errStatus = false;
+				toErr.setBorder(UIManager.getBorder("Button.border"));
+				Sub_Button.setFocusPainted(false);
+			}
+		});
+	}
+
+	private static void addTimesButton(JButton currentButton) {
+		currentButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				Control.inputArr[0] = Double.parseDouble(numbox.getText());
+				Control.inputArr[1] = Double.parseDouble(errbox.getText());
+				numbox.setText("");
+				errbox.setText("");
+				Control.doTimes = true;
+				numbox.requestFocusInWindow();
+				Control.errStatus = false;
+				toErr.setBorder(UIManager.getBorder("Button.border"));
+				currentButton.setFocusPainted(false);
+			}
+		});
+	}
+
+	private static void addDivideButton(JButton currentButton) {
+		currentButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				Control.inputArr[0] = Double.parseDouble(numbox.getText());
+				Control.inputArr[1] = Double.parseDouble(errbox.getText());
+				numbox.setText("");
+				errbox.setText("");
+				Control.doDiv = true;
+				numbox.requestFocusInWindow();
+				Control.errStatus = false;
+				toErr.setBorder(UIManager.getBorder("Button.border"));
+				currentButton.setFocusPainted(false);
+			}
+		});
+	}
+
+	private static void addEqualsButton(JButton currentButton) {
+		currentButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				Control.inputArr[2] = Double.parseDouble(numbox.getText());
+				Control.inputArr[3] = Double.parseDouble(errbox.getText());
+				numbox.setText((Double.toString(Control.doOperation(Control.inputArr)[0])));
+				errbox.setText((Double.toString(Control.doOperation(Control.inputArr)[1])));
+				Control.doAdd = false;
+				Control.doMinus = false;
+				Control.doTimes = false;
+				Control.doDiv = false;
+				toErr.setBorder(UIManager.getBorder("Button.border"));
 				currentButton.setFocusPainted(false);
 			}
 		});
